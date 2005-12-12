@@ -38,7 +38,7 @@ serwera.
 %setup -q -n cluster-%{version}
 cd %{name}
 %{__perl} -pi -e 's/-g /%{rpmcflags} /' src/{clulib,daemons}/Makefile
-%{__perl} -pi -e 's,-g ,%{rpmcflags} -I/usr/include/ncurses ,' src/utils/Makefile
+%{__perl} -pi -e 's,-g ,%{rpmcflags} -I%{_includedir}/ncurses ,' src/utils/Makefile
 
 %build
 cd %{name}
