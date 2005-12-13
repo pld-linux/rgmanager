@@ -9,19 +9,19 @@ Source0:	ftp://sources.redhat.com/pub/cluster/releases/cluster-%{version}.tar.gz
 # Source0-md5:	e98551b02ee8ed46ae0ab8fca193d751
 URL:		http://sources.redhat.com/cluster/
 BuildRequires:	ccs-devel
-BuildRequires:	magma-devel
 BuildRequires:	libxml2-devel
+BuildRequires:	magma-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	perl-base
+Requires:	/sbin/findfs
 Requires:	awk
 Requires:	bash
-Requires:	grep
-Requires:	sed
 Requires:	ccs
+Requires:	grep
 Requires:	magma
-Requires:	net-tools
 Requires:	mount
-Requires:	/sbin/findfs
+Requires:	net-tools
+Requires:	sed
 Obsoletes:	clumanager
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -38,7 +38,7 @@ serwera.
 %setup -q -n cluster-%{version}
 cd %{name}
 %{__perl} -pi -e 's/-g /%{rpmcflags} /' src/{clulib,daemons}/Makefile
-%{__perl} -pi -e 's,-g ,%{rpmcflags} -I%{_includedir}/ncurses ,' src/utils/Makefile
+%{__perl} -pi -e 's,-g ,%{rpmcflags} -I/usr/include/ncurses ,' src/utils/Makefile
 
 %build
 cd %{name}
