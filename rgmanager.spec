@@ -10,7 +10,7 @@ Source0:	ftp://sources.redhat.com/pub/cluster/releases/cluster-%{version}.tar.gz
 URL:		http://sources.redhat.com/cluster/
 BuildRequires:	ccs-devel
 BuildRequires:	libxml2-devel
-BuildRequires:	magma-devel
+BuildRequires:	magma-devel >= 0:1.02.00
 BuildRequires:	ncurses-devel
 BuildRequires:	perl-base
 Requires:	/sbin/findfs
