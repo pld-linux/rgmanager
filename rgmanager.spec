@@ -29,7 +29,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Resource Group Manager provides high availability of critical server
 applications in the event of planned or unplanned system downtime.
 
-%description
+%description -l pl
 Resource Group Manager daje wysok± dostêpno¶æ krytycznych aplikacji
 serwerowych w przypadku planowanych lub nieplanowanych wy³±czeñ
 serwera.
