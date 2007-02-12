@@ -1,5 +1,5 @@
 Summary:	Open Source HA Resource Group Failover
-Summary(pl.UTF-8):   Failover dla grupy zasobów o wysokiej dostępności
+Summary(pl.UTF-8):	Failover dla grupy zasobów o wysokiej dostępności
 Name:		rgmanager
 Version:	1.03.00
 Release:	1
