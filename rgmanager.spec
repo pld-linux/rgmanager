@@ -1,5 +1,5 @@
 Summary:	Open Source HA Resource Group Failover
-Summary(pl):	Failover dla grupy zasobów o wysokiej dostêpno¶ci
+Summary(pl.UTF-8):   Failover dla grupy zasobÃ³w o wysokiej dostÄ™pnoÅ›ci
 Name:		rgmanager
 Version:	1.03.00
 Release:	1
@@ -29,9 +29,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Resource Group Manager provides high availability of critical server
 applications in the event of planned or unplanned system downtime.
 
-%description -l pl
-Resource Group Manager daje wysok± dostêpno¶æ krytycznych aplikacji
-serwerowych w przypadku planowanych lub nieplanowanych wy³±czeñ
+%description -l pl.UTF-8
+Resource Group Manager daje wysokÄ… dostÄ™pnoÅ›Ä‡ krytycznych aplikacji
+serwerowych w przypadku planowanych lub nieplanowanych wyÅ‚Ä…czeÅ„
 serwera.
 
 %prep
