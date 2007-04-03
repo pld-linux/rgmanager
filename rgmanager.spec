@@ -1,16 +1,16 @@
 Summary:	Open Source HA Resource Group Failover
 Summary(pl.UTF-8):	Failover dla grupy zasobów o wysokiej dostępności
 Name:		rgmanager
-Version:	1.03.00
+Version:	2.00.00
 Release:	1
 License:	GPL/LGPL
 Group:		Applications/System
 Source0:	ftp://sources.redhat.com/pub/cluster/releases/cluster-%{version}.tar.gz
-# Source0-md5:	8eea23df70d2007c4fb8c234cfea49cf
+# Source0-md5:	2ef3f4ba9d3c87b50adfc9b406171085
 URL:		http://sources.redhat.com/cluster/
 BuildRequires:	ccs-devel
+BuildRequires:	dlm-devel
 BuildRequires:	libxml2-devel
-BuildRequires:	magma-devel >= 0:1.02.00
 BuildRequires:	ncurses-devel
 BuildRequires:	perl-base
 Requires:	/sbin/findfs
