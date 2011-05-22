@@ -1,24 +1,27 @@
 Summary:	Open Source HA Resource Group Failover
 Summary(pl.UTF-8):	Failover dla grupy zasobów o wysokiej dostępności
 Name:		rgmanager
-Version:	2.00.00
+Version:	2.03.10
 Release:	1
-License:	GPL/LGPL
+License:	GPL v2+
 Group:		Applications/System
 Source0:	ftp://sources.redhat.com/pub/cluster/releases/cluster-%{version}.tar.gz
-# Source0-md5:	2ef3f4ba9d3c87b50adfc9b406171085
+# Source0-md5:	379b560096e315d4b52e238a5c72ba4a
 URL:		http://sources.redhat.com/cluster/
-BuildRequires:	ccs-devel
-BuildRequires:	dlm-devel
+BuildRequires:	ccs-devel >= 2.03.10
+BuildRequires:	cman-devel >= 2.03.10
+BuildRequires:	dlm-devel >= 2.03.10
 BuildRequires:	libxml2-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	perl-base
+BuildRequires:	slang-devel
 Requires:	/sbin/findfs
 Requires:	awk
 Requires:	bash
-Requires:	ccs
+Requires:	ccs >= 2.03.10
+Requires:	cman-libs >= 2.03.10
+Requires:	dlm-libs >= 2.03.10
 Requires:	grep
-Requires:	magma
 Requires:	mount
 Requires:	net-tools
 Requires:	sed
@@ -36,21 +39,37 @@ serwera.
 
 %prep
 %setup -q -n cluster-%{version}
-cd %{name}
-%{__perl} -pi -e 's/-g /%{rpmcflags} /' src/{clulib,daemons}/Makefile
-%{__perl} -pi -e 's,-g ,%{rpmcflags} -I/usr/include/ncurses ,' src/utils/Makefile
+
+# there are some unused variables
+%{__perl} -pi -e 's/-Werror //' %{name}/src/clulib/Makefile
+%{__perl} -pi -e 's/-Werror //' %{name}/src/daemons/Makefile
+%{__perl} -pi -e 's/-Werror //' %{name}/src/utils/Makefile
+%{__perl} -pi -e 's/-lncurses/-lncurses -ltinfo/' %{name}/src/utils/Makefile
 
 %build
-cd %{name}
-./configure
-%{__make} \
-	CC="%{__cc}"
+./configure \
+	--cc="%{__cc}" \
+	--cflags="%{rpmcflags} -Wall" \
+	--ldflags="%{rpmldflags}" \
+	--incdir=%{_includedir} \
+	--ncursesincdir=%{_includedir}/ncurses \
+	--libdir=%{_libdir} \
+	--libexecdir=%{_libdir} \
+	--mandir=%{_mandir} \
+	--prefix=%{_prefix} \
+	--sbindir=%{_sbindir} \
+	--without_gfs \
+	--without_gfs2 \
+	--without_gnbd \
+	--without_kernel_modules
+# -j1 because of missing dependency in clulib
+%{__make} -C %{name} -j1 \
+	NCURSES_LDFLAGS="-lncurses -ltinfo"
 
 %install
 rm -rf $RPM_BUILD_ROOT
-cd %{name}
 
-%{__make} install \
+%{__make} -C %{name} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
@@ -58,8 +77,22 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc %{name}/{AUTHORS,ChangeLog,README,TODO,errors.txt}
-%attr(755,root,root) %{_sbindir}/*
+%doc %{name}/{ChangeLog,README,errors.txt}
+%attr(755,root,root) %{_sbindir}/clubufflush
+%attr(755,root,root) %{_sbindir}/clufindhostname
+%attr(755,root,root) %{_sbindir}/clulog
+%attr(755,root,root) %{_sbindir}/clunfslock
+%attr(755,root,root) %{_sbindir}/clurgmgrd
+%attr(755,root,root) %{_sbindir}/clurmtabd
+%attr(755,root,root) %{_sbindir}/clustat
+%attr(755,root,root) %{_sbindir}/clusvcadm
+%attr(755,root,root) %{_sbindir}/rg_test
 #%attr(754,root,root) /etc/rc.d/init.d/rgmanager
 %attr(755,root,root) %{_datadir}/cluster
-%{_mandir}/man8/*
+%{_mandir}/man8/clubufflush.8*
+%{_mandir}/man8/clufindhostname.8*
+%{_mandir}/man8/clulog.8*
+%{_mandir}/man8/clurgmgrd.8*
+%{_mandir}/man8/clurmtabd.8*
+%{_mandir}/man8/clustat.8*
+%{_mandir}/man8/clusvcadm.8*
