@@ -1,26 +1,28 @@
+# NOTE: obsoleted by -rgmanager subpackage from cluster.spec (3.x)
 Summary:	Open Source HA Resource Group Failover
 Summary(pl.UTF-8):	Failover dla grupy zasobów o wysokiej dostępności
 Name:		rgmanager
-Version:	2.03.10
+Version:	2.03.11
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
 Source0:	ftp://sources.redhat.com/pub/cluster/releases/cluster-%{version}.tar.gz
-# Source0-md5:	379b560096e315d4b52e238a5c72ba4a
+# Source0-md5:	712b9f583472d1de614641bc0f4a0aaf
+Patch0:		cluster-kernel.patch
 URL:		http://sources.redhat.com/cluster/
-BuildRequires:	ccs-devel >= 2.03.10
-BuildRequires:	cman-devel >= 2.03.10
-BuildRequires:	dlm-devel >= 2.03.10
-BuildRequires:	libxml2-devel
+BuildRequires:	ccs-devel >= 2.03.11
+BuildRequires:	cman-devel >= 2.03.11
+BuildRequires:	dlm-devel >= 2.03.11
+BuildRequires:	libxml2-devel >= 2
 BuildRequires:	ncurses-devel
 BuildRequires:	perl-base
 BuildRequires:	slang-devel
 Requires:	/sbin/findfs
 Requires:	awk
 Requires:	bash
-Requires:	ccs >= 2.03.10
-Requires:	cman-libs >= 2.03.10
-Requires:	dlm-libs >= 2.03.10
+Requires:	ccs >= 2.03.11
+Requires:	cman-libs >= 2.03.11
+Requires:	dlm-libs >= 2.03.11
 Requires:	grep
 Requires:	mount
 Requires:	net-tools
@@ -39,6 +41,7 @@ serwera.
 
 %prep
 %setup -q -n cluster-%{version}
+%patch0 -p1
 
 # there are some unused variables
 %{__perl} -pi -e 's/-Werror //' %{name}/src/clulib/Makefile
@@ -54,7 +57,7 @@ serwera.
 	--incdir=%{_includedir} \
 	--ncursesincdir=%{_includedir}/ncurses \
 	--libdir=%{_libdir} \
-	--libexecdir=%{_libdir} \
+	--libexecdir=%{_libexecdir} \
 	--mandir=%{_mandir} \
 	--prefix=%{_prefix} \
 	--sbindir=%{_sbindir} \
