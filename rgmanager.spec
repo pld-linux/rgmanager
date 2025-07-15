@@ -41,7 +41,7 @@ serwera.
 
 %prep
 %setup -q -n cluster-%{version}
-%patch0 -p1
+%patch -P0 -p1
 
 # there are some unused variables
 %{__perl} -pi -e 's/-Werror //' %{name}/src/clulib/Makefile
